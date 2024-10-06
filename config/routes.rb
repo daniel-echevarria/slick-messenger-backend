@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
-  namespace :auth do
-    post 'google', to: 'auth#google'
-  end
-
+  get "users/index"
+  resources :users
   devise_for :users, path: '',
   controllers: {
     sessions: 'users/sessions',
