@@ -1,3 +1,4 @@
+require 'net/http'
 module Auth
   class AuthController < ApplicationController
 

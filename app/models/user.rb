@@ -5,10 +5,8 @@ class User < ApplicationRecord
          :registerable,
          :recoverable,
          :validatable,
-        #  :omniauthable,
          :jwt_authenticatable,
          jwt_revocation_strategy: self
-        #  omniauth_providers: [:google_oauth2]
 
   def self.from_omniauth(access_token)
     data = access_token.info
