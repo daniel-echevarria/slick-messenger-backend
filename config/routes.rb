@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   namespace :auth do
     post 'google', to: 'auth#google'
   end
