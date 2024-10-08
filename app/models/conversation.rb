@@ -1,3 +1,3 @@
 class Conversation < ApplicationRecord
-  belongs_to :frienship
+  belongs_to :friendship
 end
