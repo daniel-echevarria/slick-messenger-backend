@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :conversations
   resources :friendships
+  resources :messages
 
   devise_for :users, path: '', controllers: {
     sessions: 'users/sessions',
