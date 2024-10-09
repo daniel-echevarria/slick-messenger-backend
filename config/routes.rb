@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     post 'google', to: 'auth#google'
   end
 
+  get 'you', to: 'users#you'
   get 'users', to: 'users#index'
 
   resources :conversations
