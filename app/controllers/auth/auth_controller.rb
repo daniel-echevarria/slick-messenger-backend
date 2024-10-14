@@ -12,6 +12,7 @@ module Auth
         user = User.find_or_create_by(email: user_info['email']) do |u|
           u.password = Devise.friendly_token[0, 20]
           u.name = user_info['name']
+          u.avatar_url = user_info['picture']
         end
 
         # Generate a JWT token
