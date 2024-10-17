@@ -15,9 +15,14 @@ module Auth
           u.avatar_url = user_info['picture']
         end
 
+        p "this is the user #{user.email}"
+
+        if user.persisted?
+          jwt = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
+          render json: { jwt: jwt }, status: :ok
+        end
+
         # Generate a JWT token
-        jwt = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
-        render json: { jwt: jwt }, status: :ok
       else
         render json: { error: 'Invalid token' }, status: :unauthorized
       end

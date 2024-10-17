@@ -6,10 +6,9 @@ class UsersController < ApplicationController
     render json: users, status: :ok
   end
 
-  def you
-    you = current_user
-    if you
-      render json: { message: "You are loged in as #{you.name || you.email}", current_user: you }, status: :ok
+  def current
+    if current_user
+      render json: { message: "You are loged in as #{current_user.name || current_user.email}", current_user: current_user }, status: :ok
     else
       render json: { message: 'No current user found' }, status: :not_found
     end
