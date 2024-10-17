@@ -11,14 +11,16 @@ module Auth
       if response.is_a?(Net::HTTPSuccess)
         user_info = JSON.parse(response.body)
         p "this is the user info #{user_info}"
+        user_just_created = false
         user = User.find_or_create_by(email: user_info['email']) do |u|
           u.password = Devise.friendly_token[0, 20]
           u.name = user_info['name']
           u.avatar_url = user_info['picture']
+          user_just_created = true
         end
 
         profile = Profile.find_by(user_id: user.id)
-        profile.update(
+        user_just_created && profile.update(
           display_name: user_info['name'],
           name: user_info['name'],
           picture: user_info['picture'],

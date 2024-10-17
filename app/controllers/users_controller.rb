@@ -7,8 +7,13 @@ class UsersController < ApplicationController
   end
 
   def current
+    profile = current_user.profile
     if current_user
-      render json: { message: "You are loged in as #{current_user.name || current_user.email}", current_user: current_user }, status: :ok
+      render json: {
+        message: "You are loged in as #{current_user.name || current_user.email}",
+        current_user: current_user,
+        profile: profile
+      }, status: :ok
     else
       render json: { message: 'No current user found' }, status: :not_found
     end
