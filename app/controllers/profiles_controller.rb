@@ -11,13 +11,13 @@ class ProfilesController < ApplicationController
     if profile.save
       render json: { profile: profile, message: 'Profile updated :)' }, status: :ok
     else
-      render json: { message: 'Problemo when updating the profile' }, status: :unprocessable_entity
+      render json: { errors: profile.errors }, status: :unprocessable_entity
     end
   end
 
   private
 
   def profile_params
-    params.require(:profile).permit(:name, :display_name, :picture, :title)
+    params.require(:profile).permit(:name, :display_name, :picture, :title, :phone, :email)
   end
 end
