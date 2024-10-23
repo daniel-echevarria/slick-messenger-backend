@@ -15,11 +15,11 @@ class User < ApplicationRecord
   private
 
   def add_profile
-    unless self.profile
-      self.create_profile do |p|
-        p.email = self.email
-        p.picture = 'generic profile image url'
-      end
+    return if profile
+
+    create_profile do |p|
+      p.email = email
+      p.picture = 'https://img.freepik.com/free-vector/hand-drawn-question-mark-silhouette_23-2150940537.jpg?t=st=1729677656~exp=1729681256~hmac=c384dc151aea30d18319b0b8534fc89d8df876a7f6390713a60b5007e595a157&w=1800'
     end
   end
 end
