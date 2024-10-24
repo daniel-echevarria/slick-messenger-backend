@@ -32,6 +32,7 @@ gem "rack-cors"
 gem "devise", "~> 4.9"
 gem 'devise-jwt'
 gem 'dotenv-rails', groups: %i[development test]
+gem 'omniauth-google-oauth2'
 gem 'jsonapi-serializer'
 
 group :development, :test do
