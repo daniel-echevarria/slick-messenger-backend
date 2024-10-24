@@ -7,7 +7,11 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "*"
+    if Rails.env.development?
+      origins '*' # Allow all origins in development
+    else
+      origins 'https://slick-messenger.netlify.app' # Allow only your frontend domain in production
+    end
 
     resource "*",
       headers: :any,
