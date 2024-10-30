@@ -16,8 +16,6 @@ class User < ApplicationRecord
   def add_profile
     return if profile
 
-    create_profile do |p|
-      p.email = email
-    end
+    profile = self.profile.create(email: email)
   end
 end
