@@ -2,7 +2,6 @@ require 'net/http'
 
 module Auth
   class AuthController < ApplicationController
-
     def google
       token = params[:token]
       response = Net::HTTP.get_response(URI("https://oauth2.googleapis.com/tokeninfo?id_token=#{token}"))
@@ -10,12 +9,10 @@ module Auth
 
       if response.is_a?(Net::HTTPSuccess)
         user_info = JSON.parse(response.body)
-        p "this is the user info #{user_info}"
         user_just_created = false
         user = User.find_or_create_by(email: user_info['email']) do |u|
           u.password = Devise.friendly_token[0, 20]
           u.name = user_info['name']
-          u.avatar_url = user_info['picture']
           user_just_created = true
         end
 

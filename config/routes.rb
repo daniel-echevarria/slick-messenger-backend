@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get 'current', to: 'users#current'
   get 'users', to: 'users#index'
+  patch 'profiles/:id/update_profile_picture', to: 'profiles#update_profile_picture'
 
   resources :conversations
   resources :friendships
