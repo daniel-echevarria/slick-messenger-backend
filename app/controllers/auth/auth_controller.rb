@@ -1,4 +1,5 @@
 require 'net/http'
+require 'open-uri'
 
 module Auth
   class AuthController < ApplicationController
@@ -9,20 +10,12 @@ module Auth
 
       if response.is_a?(Net::HTTPSuccess)
         user_info = JSON.parse(response.body)
-        user_just_created = false
         user = User.find_or_create_by(email: user_info['email']) do |u|
           u.password = Devise.friendly_token[0, 20]
           u.name = user_info['name']
-          user_just_created = true
         end
 
-        profile = Profile.find_by(user_id: user.id)
-        user_just_created && profile.update(
-          display_name: user_info['name'],
-          name: user_info['name'],
-          picture: user_info['picture'],
-          email: user_info['email']
-        )
+        create_profile(user, user_info)
 
         if user.persisted?
           jwt = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
@@ -33,6 +26,24 @@ module Auth
       else
         render json: { error: 'Invalid token' }, status: :unauthorized
       end
+    end
+
+    def create_profile(user, user_info)
+      profile = Profile.find_or_create_by(user_id: user.id)
+
+      profile.update(
+        display_name: user_info['name'],
+        name: user_info['name'],
+        email: user_info['email']
+      )
+
+      profile.avatar.attach(
+        io: URI.open(user_info['picture']),
+        filename: 'avatar.jpg', # Use a suitable filename
+        content_type: 'image/jpeg' # Set the correct MIME type
+      )
+
+      profile.save
     end
   end
 end

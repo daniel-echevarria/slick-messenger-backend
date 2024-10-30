@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
-  has_one :profile
+  has_one :profile, dependent: :destroy
+  has_many :friendships
   after_create :add_profile
 
   devise :database_authenticatable,
@@ -17,7 +18,6 @@ class User < ApplicationRecord
 
     create_profile do |p|
       p.email = email
-      p.picture = 'https://img.freepik.com/free-vector/hand-drawn-question-mark-silhouette_23-2150940537.jpg?t=st=1729677656~exp=1729681256~hmac=c384dc151aea30d18319b0b8534fc89d8df876a7f6390713a60b5007e595a157&w=1800'
     end
   end
 end
