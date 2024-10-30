@@ -36,12 +36,13 @@ module Auth
         name: user_info['name'],
         email: user_info['email']
       )
-
-      profile.avatar.attach(
+      unless profile.avatar.attached?
+        profile.avatar.attach(
         io: URI.open(user_info['picture']),
         filename: 'avatar.jpg', # Use a suitable filename
         content_type: 'image/jpeg' # Set the correct MIME type
-      )
+        )
+      end
 
       profile.save
     end

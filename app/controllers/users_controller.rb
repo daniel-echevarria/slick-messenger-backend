@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       render json: {
         message: "You are loged in as #{current_user.name || current_user.email}",
         current_user: current_user,
-        profile: profile
+        profile: { **profile.as_json, avatar: url_for(profile.avatar) }
       }, status: :ok
     else
       render json: { message: 'No current user found' }, status: :not_found
