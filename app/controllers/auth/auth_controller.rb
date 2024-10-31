@@ -4,18 +4,12 @@ require 'open-uri'
 module Auth
   class AuthController < ApplicationController
     def google
-      token = params[:token]
-      response = Net::HTTP.get_response(URI("https://oauth2.googleapis.com/tokeninfo?id_token=#{token}"))
 
+      user_info = fetch_user_info(params[:token])
 
-      if response.is_a?(Net::HTTPSuccess)
-        user_info = JSON.parse(response.body)
-        user = User.find_or_create_by(email: user_info['email']) do |u|
-          u.password = Devise.friendly_token[0, 20]
-          u.name = user_info['name']
-        end
-
-        create_profile(user, user_info)
+      if user_info
+        user = find_or_create_user(user_info)
+        user.add_profile(user_info) unless user.profile
 
         if user.persisted?
           jwt = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
@@ -28,23 +22,17 @@ module Auth
       end
     end
 
-    def create_profile(user, user_info)
-      profile = Profile.find_or_create_by(user_id: user.id)
+    def fetch_user_info(token)
+      response = Net::HTTP.get_response(URI("https://oauth2.googleapis.com/tokeninfo?id_token=#{token}"))
+      JSON.parse(response.body)
+    end
 
-      profile.update(
-        display_name: user_info['name'],
-        name: user_info['name'],
-        email: user_info['email']
-      )
-      unless profile.avatar.attached?
-        profile.avatar.attach(
-        io: URI.open(user_info['picture']),
-        filename: 'avatar.jpg', # Use a suitable filename
-        content_type: 'image/jpeg' # Set the correct MIME type
-        )
+    def find_or_create_user(user_info)
+      User.find_or_create_by(email: user_info['email']) do |u|
+        u.password = Devise.friendly_token[0, 20]
+        u.name = user_info['name']
+        u.created_with_google = true
       end
-
-      profile.save
     end
   end
 end
