@@ -9,7 +9,7 @@ class ProfilesController < ApplicationController
     profile = Profile.find(params[:id])
 
     if profile.update(profile_params)
-      render json: { profile: profile, message: 'Profile updated :)' }, status: :ok
+      render json: { profile: profile_with_avatar(profile), message: 'Profile updated :)' }, status: :ok
     else
       render json: { errors: profile.errors }, status: :unprocessable_entity
     end
@@ -22,7 +22,10 @@ class ProfilesController < ApplicationController
     profile.avatar.attach(blob)
 
     if profile.save
-      render json: { message: 'profile picture was updated successfully' }, status: :ok
+      render json: {
+        message: 'profile picture was updated successfully',
+        avatar_url: url_for(profile.avatar)
+      }, status: :ok
     else
       render json: { message: profile.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
