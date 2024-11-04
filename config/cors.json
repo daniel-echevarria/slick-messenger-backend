@@ -2,7 +2,13 @@
   {
     "maxAgeSeconds": 3600,
     "method": ["GET", "POST", "PUT", "OPTIONS"],
-    "origin": ["*"],
-    "responseHeader": ["*"]
+    "origin": ["http://localhost:5173"],
+    "responseHeader": [
+      "Content-Type",
+      "Authorization",
+      "Content-Disposition",
+      "Cache-Control",
+      "Content-MD5"
+    ]
   }
 ]
