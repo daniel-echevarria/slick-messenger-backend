@@ -16,7 +16,7 @@ local:
 # Remember not to checkin your GCS keyfile to a repository
 google:
   service: GCS
-  credentials: <%= Rails.root.join("config/secrets/gcs.keyfile.json") %>
+  credentials: <%= Rails.root.join("/etc/secrets/gcs.keyfile.json") %>
   project: My First Project
   bucket: slick_bucket
   cache_control: "public, max-age=3600"

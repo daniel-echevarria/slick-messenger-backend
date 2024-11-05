@@ -29,8 +29,8 @@ class User < ApplicationRecord
 
     profile.avatar.attach(
       io: URI.open(user_info['picture']),
-      filename: 'avatar.jpg', # Use a suitable filename
-      content_type: 'image/jpeg' # Set the correct MIME type
+      filename: 'avatar.jpg',
+      content_type: 'image/jpeg'
     )
 
     profile.save

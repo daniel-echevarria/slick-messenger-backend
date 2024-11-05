@@ -2,7 +2,7 @@
   {
     "maxAgeSeconds": 3600,
     "method": ["GET", "POST", "PUT", "OPTIONS"],
-    "origin": ["http://localhost:5173"],
+    "origin": ["http://localhost:5173", "https://slick-messenger.netlify.app"],
     "responseHeader": [
       "Content-Type",
       "Authorization",
