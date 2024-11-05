@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   def index
-    profiles = Profile.all
+    profiles = Profile.all.with_attached_avatar
     profiles_with_avatar = profiles.map { |pro| profile_with_avatar(pro) }
     render json: profiles_with_avatar, status: :ok
   end
