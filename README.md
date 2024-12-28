@@ -25,6 +25,5 @@ The Frontend repository for Slick Messenger is available here:
 [Frontend Repository](https://github.com/daniel-echevarria/slick-messenger)  
 
 ## Acknowledgements
-- Inspiration: Slack for the user interface and messaging functionality.
-- Technologies: Rails, React, Devise-JWT, PostgreSQL, Active Storage.
+- Inspiration: Slack for the user interface.
 
