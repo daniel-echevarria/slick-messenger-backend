@@ -16,7 +16,7 @@ Slick is a messaging app built with **Rails** (backend) and **React** (frontend)
 
 ## Live Demo
 You can view the live versions below:
-[Live Demo](https://slick-messenger.netlify.app/signin)
+[Live Demo](https://slick-messenger.netlify.app)
 
 Feel free to try out the app by signing up, updating your profile, and sending messages!
 
