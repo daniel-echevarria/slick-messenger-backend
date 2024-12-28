@@ -1,4 +1,4 @@
-# 🗣️ Slick Messenger - A Slack Clone (Backend)
+# Slick Messenger - A Slack Clone (Backend)
 
 **Slick Messenger** is a messaging app built with **Rails** (backend) and **React** (frontend), inspired by **Slack**. This backend repository powers the messaging functionality, including user authentication, message storage, and profile management. It serves as the API for the frontend React app.
 
