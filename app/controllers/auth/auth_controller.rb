@@ -3,8 +3,12 @@ require 'open-uri'
 
 module Auth
   class AuthController < ApplicationController
-    def google
+    def fetch_user_info(token)
+      response = Net::HTTP.get_response(URI("https://oauth2.googleapis.com/tokeninfo?id_token=#{token}"))
+      JSON.parse(response.body)
+    end
 
+    def google
       user_info = fetch_user_info(params[:token])
 
       if user_info
@@ -20,11 +24,6 @@ module Auth
       else
         render json: { error: 'Invalid token' }, status: :unauthorized
       end
-    end
-
-    def fetch_user_info(token)
-      response = Net::HTTP.get_response(URI("https://oauth2.googleapis.com/tokeninfo?id_token=#{token}"))
-      JSON.parse(response.body)
     end
 
     def find_or_create_user(user_info)
