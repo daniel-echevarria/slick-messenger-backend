@@ -1,4 +1,4 @@
 class Message < ApplicationRecord
-  has_one_attached :document
+  has_one_attached :image
   belongs_to :user
 end
